@@ -1,0 +1,104 @@
+{% set districts = __SELF__.districtList %}
+{% set schools = __SELF__.schoolList %}
+{% set name = __SELF__.name %}
+
+<p>This is for you {{ name }}! </p>
+    
+    <ul>
+        {% for school in schools %}
+        
+            <li>{{ school }}</li>
+            
+        {% endfor %}
+        
+    </ul> 
+
+    <select class="sch">
+    <option selected disabled>Please Select School</option>
+    <option value="other">Not Listed</option>
+    {% for school in schools %}
+    <option value="{{ school }}">{{ school }}</option>
+    {% endfor %}
+    </select>
+
+    <div class="other_field"></div>
+
+    {#{% if school.selected_val ==}#}
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $("select.sch").change(function(){
+            var selectedSchool = $(".sch option:selected").val();
+            //alert("You have selected the school - " + selectedSchool);
+            if (selectedSchool == 'other') {
+              alert("where is your school?");
+              $(".other_field").append('<input type="text" placeholder="Enter your school" />');
+            }
+          });
+        });
+    </script>
+
+
+{#{{ form_select('school', schools) }}#}
+
+{# {{ form_select('school', array_merge(array('default' => 'Please Select'), schools), 'default') }} #}
+
+<?= Form::select('school', array('default', 'Please Select') + $schools, 'default') ?>
+
+<p>This is the default markup for component FormCheck</p>
+
+<small>You can delete this file if you want</small>
+
+<div id="scrollable-dropdown-menu" class="tt-dataset">
+    <input class="typeahead tt-input" type="text" placeholder="state">
+</div>
+<ul></ul>
+</div>
+
+<script type="text/javascript" >
+	var substringMatcher = function(strs) {
+		return function findMatches(q, cb) {
+  			var matches, substringRegex;
+
+  			// an array that will be populated with substring matches
+  			matches = [];
+
+  			// regex used to determine if a string contains the substring `q`
+  			substrRegex = new RegExp(q, 'i');
+
+  			// iterate through the pool of strings and for any string that
+  			// contains the substring `q`, add it to the `matches` array
+  			$.each(strs, function(i, str) {
+    			if (substrRegex.test(str)) {
+      				matches.push(str);
+    			}
+  			});
+
+  			cb(matches);
+		};
+	};
+
+	
+
+var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+];
+
+
+$('#scrollable-dropdown-menu .typeahead').typeahead({
+hint: true,
+highlight: true,
+minLength: 1
+},
+{
+name: 'states',
+source: substringMatcher(states)
+});
+
+  </script>
